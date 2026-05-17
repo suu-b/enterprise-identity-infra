@@ -368,6 +368,105 @@ The system evolves into an observable organizational platform.
 
 ---
 
+# Starter Implementation
+
+This repo now includes a no-auth starter version of the company portal ecosystem.
+
+## Included Portals
+
+Internal Wolke Systems portals:
+
+- HR Portal
+- Finance Dashboard
+- Internal Git Service
+- Admin Console
+- Analytics Platform
+
+External service portal:
+
+- WorkYear, a Workday-like workforce SaaS spoof that should remain outside the Wolke Systems product surface.
+
+Each portal has mock operational records, metrics, example roles, example permissions, and identity context fields that can later be supplied by your authentication and authorization layers.
+
+## Portal Structure
+
+Portal applications live in `portals/`. Each simulated product owns its own frontend and backend boundary.
+
+```text
+portals/
+  wolke_systems/
+    backend/
+    frontend/
+  workyear/
+    backend/
+    frontend/
+```
+
+## Wolke Systems
+
+Backend:
+
+```bash
+cd portals/wolke_systems/backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+```
+
+API endpoints:
+
+- `GET /api/health`
+- `GET /api/company`
+- `GET /api/departments`
+- `GET /api/users`
+- `GET /api/portals`
+- `GET /api/portals/{portal_id}`
+
+Frontend:
+
+```bash
+cd portals/wolke_systems/frontend
+npm install
+npm run dev
+```
+
+By default the Wolke Systems client expects the API at `http://localhost:8000`. To point it elsewhere:
+
+```bash
+VITE_API_BASE_URL=http://localhost:8000 npm run dev
+```
+
+## WorkYear
+
+Backend:
+
+```bash
+cd portals/workyear/backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8100
+```
+
+Frontend:
+
+```bash
+cd portals/workyear/frontend
+npm install
+npm run dev -- --port 5174
+```
+
+By default the WorkYear frontend expects its API at `http://localhost:8100`. To point it elsewhere:
+
+```bash
+VITE_WORKYEAR_API_BASE_URL=http://localhost:8100 npm run dev -- --port 5174
+```
+
+Authentication is intentionally absent from this starter implementation.
+
+---
+
 # Core Insight
 
 Every enterprise identity system is fundamentally solving four questions:
