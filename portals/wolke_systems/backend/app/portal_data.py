@@ -16,7 +16,7 @@ COMPANY = {
     "name": "Wolke Systems",
     "tagline": "Internal enterprise identity playground",
     "stage": "Wolke Applications Ecosystem",
-    "identity_note": "Authentication and authorization are intentionally not implemented here.",
+    "identity_note": "Protected",
 }
 
 
