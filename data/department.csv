@@ -1,0 +1,19 @@
+id,name,head,cohead
+D001,Executive Office,E001,E002
+D002,Finance,E003,E004
+D003,Human Resources,E005,E006
+D004,Engineering,E007,E008
+D005,Product Management,E009,E010
+D006,Sales,E011,E012
+D007,Marketing,E013,E014
+D008,Customer Success,E015,E016
+D009,Legal and Compliance,E017,E018
+D010,Information Security,E019,E020
+D011,IT Operations,E021,E022
+D012,Data and Analytics,E023,E024
+D013,Cloud Infrastructure,E025,E026
+D014,Procurement,E027,E028
+D015,Corporate Strategy,E029,E030
+D016,Facilities and Workplace,E031,E032
+D017,Research and Innovation,E033,E034
+D018,Global Operations,E035,E036

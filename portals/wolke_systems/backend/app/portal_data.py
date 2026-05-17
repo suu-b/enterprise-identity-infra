@@ -1,104 +1,116 @@
+import sqlite3
+from pathlib import Path
+from typing import Any
+
+DB_PATH = Path(__file__).resolve().parents[4] / "data" / "wolke_systems.sqlite3"
+
+
+def get_db_connection() -> sqlite3.Connection:
+    """Get a connection to the SQLite database."""
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
 COMPANY = {
     "name": "Wolke Systems",
     "tagline": "Internal enterprise identity playground",
-    "stage": "Scope II - Internal Applications Ecosystem",
+    "stage": "Wolke Applications Ecosystem",
     "identity_note": "Authentication and authorization are intentionally not implemented here.",
 }
 
-DEPARTMENTS = [
-    {
-        "id": "engineering",
-        "name": "Engineering",
-        "teams": ["Backend", "Frontend", "Platform"],
-        "headcount": 42,
-        "lead": "Mira Shah",
-    },
-    {
-        "id": "finance",
-        "name": "Finance",
-        "teams": ["Accounting", "Budgeting", "Payroll"],
-        "headcount": 14,
-        "lead": "Owen Patel",
-    },
-    {
-        "id": "hr",
-        "name": "Human Resources",
-        "teams": ["People Ops", "Recruiting", "Benefits"],
-        "headcount": 11,
-        "lead": "Anika Rao",
-    },
-    {
-        "id": "security",
-        "name": "Security",
-        "teams": ["AppSec", "IAM", "Incident Response"],
-        "headcount": 9,
-        "lead": "Dev Verma",
-    },
-    {
-        "id": "operations",
-        "name": "Operations",
-        "teams": ["Facilities", "Vendor Ops", "IT Support"],
-        "headcount": 18,
-        "lead": "Leah Thomas",
-    },
-]
 
-USERS = [
-    {
-        "id": "u-1001",
-        "name": "Mira Shah",
-        "role": "Engineering Manager",
-        "department": "Engineering",
-        "type": "Manager",
-        "status": "Active",
-        "location": "Bengaluru",
-    },
-    {
-        "id": "u-1002",
-        "name": "Owen Patel",
-        "role": "Finance Manager",
-        "department": "Finance",
-        "type": "Manager",
-        "status": "Active",
-        "location": "Mumbai",
-    },
-    {
-        "id": "u-1003",
-        "name": "Anika Rao",
-        "role": "HR Business Partner",
-        "department": "Human Resources",
-        "type": "Employee",
-        "status": "Active",
-        "location": "Pune",
-    },
-    {
-        "id": "u-1004",
-        "name": "Dev Verma",
-        "role": "Security Administrator",
-        "department": "Security",
-        "type": "System Administrator",
-        "status": "Active",
-        "location": "Hyderabad",
-    },
-    {
-        "id": "u-1005",
-        "name": "Nora Iyer",
-        "role": "Platform Engineer",
-        "department": "Engineering",
-        "type": "Employee",
-        "status": "Active",
-        "location": "Remote",
-    },
-    {
-        "id": "u-1006",
-        "name": "Sam Gill",
-        "role": "Data Analyst",
-        "department": "Operations",
-        "type": "Contractor",
-        "status": "Contract ends in 21 days",
-        "location": "Delhi",
-    },
-]
+def get_departments() -> list[dict[str, Any]]:
+    """Fetch departments from SQLite database."""
+    conn = get_db_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT 
+                d.id,
+                d.name,
+                COUNT(DISTINCT t.id) as team_count,
+                COUNT(DISTINCT e.id) as employee_count,
+                d.head as lead_id
+            FROM departments d
+            LEFT JOIN teams t ON t.department_id = d.id
+            LEFT JOIN employees e ON e.department_id = d.id
+            GROUP BY d.id, d.name, d.head
+        """)
+        
+        departments = []
+        for row in cursor.fetchall():
+            dept_dict = dict(row)
+            # Fetch the lead name
+            lead_cursor = conn.cursor()
+            lead_cursor.execute(
+                "SELECT firstname, lastname FROM employees WHERE id = ?",
+                (dept_dict['lead_id'],)
+            )
+            lead_row = lead_cursor.fetchone()
+            lead_name = f"{lead_row[0]} {lead_row[1]}" if lead_row else "Unknown"
+            
+            # Fetch team names
+            team_cursor = conn.cursor()
+            team_cursor.execute(
+                "SELECT name FROM teams WHERE department_id = ?",
+                (dept_dict['id'],)
+            )
+            teams = [t[0] for t in team_cursor.fetchall()]
+            
+            departments.append({
+                "id": dept_dict['id'],
+                "name": dept_dict['name'],
+                "teams": teams,
+                "headcount": dept_dict['employee_count'],
+                "lead": lead_name,
+            })
+        
+        return departments
+    finally:
+        conn.close()
+
+
+def get_users() -> list[dict[str, Any]]:
+    """Fetch users (employees) from SQLite database."""
+    conn = get_db_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT 
+                e.id,
+                e.firstname,
+                e.lastname,
+                e.email,
+                d.name as department_name,
+                t.name as team_name,
+                e.office
+            FROM employees e
+            LEFT JOIN departments d ON d.id = e.department_id
+            LEFT JOIN teams t ON t.id = e.team_id
+            ORDER BY e.firstname, e.lastname
+        """)
+        
+        users = []
+        for row in cursor.fetchall():
+            row_dict = dict(row)
+            users.append({
+                "id": row_dict['id'],
+                "name": f"{row_dict['firstname']} {row_dict['lastname']}",
+                "role": row_dict['team_name'] or "Employee",
+                "department": row_dict['department_name'] or "Unassigned",
+                "type": "Employee",
+                "status": "Active",
+                "location": row_dict['office'] or "Remote",
+            })
+        
+        return users
+    finally:
+        conn.close()
+
+
+DEPARTMENTS = get_departments()
+USERS = get_users()
 
 PORTALS = [
     {
@@ -143,7 +155,7 @@ PORTALS = [
     },
     {
         "id": "git",
-        "name": "Internal Git Service",
+        "name": "DevWolke",
         "summary": "Engineering repositories, pull requests, deployment keys, and code ownership.",
         "department": "Engineering",
         "accent": "#2563eb",

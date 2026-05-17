@@ -181,82 +181,137 @@ button {
   line-height: 1.55;
 }
 
-.metric-grid {
+.widget-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin: 28px 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 28px;
 }
 
-.metric-card,
-.panel {
+.widget {
   background: #fff;
   border: 1px solid #dde5dc;
   border-radius: 8px;
   box-shadow: 0 12px 28px rgba(22, 38, 28, 0.06);
 }
 
-.metric-card {
-  padding: 18px;
-}
-
-.metric-card span,
-.record span,
-.person-row span,
-.department-profile span,
-.department-map span {
-  color: #63736a;
-  font-size: 13px;
-}
-
-.metric-card strong {
-  display: block;
-  margin-top: 12px;
-  font-size: 28px;
-}
-
-.content-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.9fr);
-  gap: 16px;
-}
-
-.panel {
+.widget {
   padding: 20px;
 }
 
-.primary-panel {
-  grid-row: span 2;
+.widget-wide {
+  grid-column: 1 / -1;
 }
 
-.panel-heading {
+.widget-heading {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 18px;
 }
 
-.panel-heading h2 {
+.widget-heading h2 {
   margin: 0;
   font-size: 18px;
 }
 
-.panel-heading svg {
+.widget-heading svg {
   width: 20px;
   height: 20px;
   color: #52685d;
 }
 
-.record-list,
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.single-column {
+  grid-template-columns: 1fr;
+}
+
+.form-grid label,
+.select-shell {
+  display: grid;
+  gap: 7px;
+  color: #506258;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 11px;
+  color: #1f2b25;
+  background: #f8faf7;
+  border: 1px solid #d9e3da;
+  border-radius: 8px;
+}
+
+select {
+  appearance: none;
+}
+
+.primary-action,
+.secondary-action,
+.session-row button,
+.payroll-row button,
+.approval-row button {
+  min-height: 38px;
+  padding: 9px 13px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.primary-action {
+  margin-top: 16px;
+  color: #fff;
+  background: #19312b;
+  border: 1px solid #19312b;
+}
+
+.secondary-action,
+.session-row button,
+.payroll-row button,
+.approval-row button {
+  color: #21352b;
+  background: #eef4ee;
+  border: 1px solid #d8e5da;
+  font-weight: 800;
+}
+
+.primary-action:hover,
+.secondary-action:hover,
+.session-row button:hover,
+.payroll-row button:hover,
+.approval-row button:hover {
+  filter: brightness(0.97);
+}
+
+.session-list,
 .people-list,
-.department-map {
+.payroll-grid,
+.approval-list,
+.money-table,
+.bar-list,
+.repo-tree {
   display: grid;
   gap: 10px;
 }
 
-.record,
 .person-row,
-.department-map div {
+.session-row,
+.payroll-row,
+.approval-row,
+.money-row,
+.bar-row,
+.code-card,
+.repo-tree span,
+.payslip-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -267,60 +322,32 @@ button {
   border-radius: 8px;
 }
 
-.record strong,
-.record span,
 .person-row strong,
-.person-row span {
+.person-row span,
+.session-row strong,
+.session-row span,
+.approval-row strong,
+.approval-row span,
+.money-row strong,
+.money-row span,
+.bar-row strong,
+.bar-row span,
+.payslip-card span,
+.payslip-card p,
+.code-card strong,
+.code-card span {
   display: block;
 }
 
-.record span,
-.person-row span {
+.person-row span,
+.session-row span,
+.approval-row span,
+.money-row span,
+.bar-row span,
+.code-card span {
   margin-top: 4px;
-}
-
-.record p {
-  max-width: 220px;
-  margin: 0;
-  color: #334139;
   font-size: 13px;
-  font-weight: 700;
-  text-align: right;
-}
-
-.tag-group + .tag-group {
-  margin-top: 18px;
-}
-
-.tag-group h3 {
-  margin: 0 0 10px;
-  color: #4f6257;
-  font-size: 13px;
-  text-transform: uppercase;
-}
-
-.tag-group div,
-.team-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.tag-group span,
-.team-row span {
-  padding: 7px 9px;
-  color: #27342d;
-  background: #eef4ee;
-  border: 1px solid #dce7dc;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.department-profile {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 16px;
+  color: #63736a;
 }
 
 .person-row small {
@@ -329,15 +356,177 @@ button {
   text-align: right;
 }
 
-.department-map div {
-  align-items: flex-start;
-  flex-direction: column;
-  gap: 4px;
+.toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
 }
 
-.department-map div.selected {
-  border-color: #8bb59b;
-  box-shadow: inset 3px 0 0 #2f8d5f;
+.select-shell {
+  position: relative;
+  flex: 1 1 260px;
+}
+
+.select-shell svg {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 17px;
+  height: 17px;
+  color: #60746a;
+  pointer-events: none;
+}
+
+.payroll-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.payroll-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(110px, auto) auto;
+  padding: 12px;
+}
+
+.payroll-row label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  font-weight: 800;
+}
+
+.payroll-row input {
+  width: 16px;
+  min-height: 16px;
+  accent-color: #19312b;
+}
+
+.payroll-row small {
+  color: #60746a;
+}
+
+.payslip-card,
+.code-card {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.payslip-card strong {
+  font-size: 34px;
+  letter-spacing: 0;
+}
+
+.payslip-card p {
+  margin: 0;
+  color: #63736a;
+}
+
+.money-row,
+.bar-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(160px, 0.8fr) minmax(96px, auto);
+}
+
+.money-row small,
+.bar-row small {
+  color: #25362e;
+  font-weight: 800;
+  text-align: right;
+}
+
+.meter {
+  height: 9px;
+  overflow: hidden;
+  background: #e4ece4;
+  border-radius: 999px;
+}
+
+.meter span {
+  display: block;
+  height: 100%;
+  background: #2f8d5f;
+  border-radius: inherit;
+}
+
+.repo-tree span {
+  justify-content: flex-start;
+  color: #2c4035;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 13px;
+}
+
+.badge-card {
+  min-height: 178px;
+  padding: 22px;
+  color: #f7faf6;
+  background: linear-gradient(135deg, #19312b, #315c45);
+  border-radius: 8px;
+}
+
+.badge-card span,
+.badge-card strong,
+.badge-card p {
+  display: block;
+}
+
+.badge-card span {
+  color: #c8d9ce;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.badge-card strong {
+  margin-top: 42px;
+  font-size: 26px;
+  letter-spacing: 0;
+}
+
+.badge-card p {
+  margin: 8px 0 0;
+  color: #dce8df;
+}
+
+.activity-grid,
+.token-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.activity-card,
+.token-grid div {
+  padding: 14px;
+  background: #f8faf7;
+  border: 1px solid #e2e8e1;
+  border-radius: 8px;
+}
+
+.activity-card span,
+.activity-card strong,
+.activity-card small,
+.token-grid span,
+.token-grid strong {
+  display: block;
+}
+
+.activity-card span,
+.token-grid span {
+  color: #63736a;
+  font-size: 13px;
+}
+
+.activity-card strong,
+.token-grid strong {
+  margin-top: 10px;
+  font-size: 26px;
+}
+
+.activity-card small {
+  margin-top: 4px;
+  color: #315c45;
+  font-weight: 800;
 }
 
 .empty-state {
@@ -373,21 +562,40 @@ button {
   }
 
   .portal-header,
-  .record,
-  .person-row {
+  .person-row,
+  .session-row,
+  .approval-row {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .record p,
   .person-row small {
     max-width: none;
     text-align: left;
   }
 
-  .metric-grid,
-  .content-grid {
+  .widget-grid,
+  .form-grid,
+  .payroll-grid,
+  .activity-grid,
+  .token-grid {
     grid-template-columns: 1fr;
+  }
+
+  .widget-wide {
+    grid-column: auto;
+  }
+
+  .money-row,
+  .bar-row,
+  .payroll-row {
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+  }
+
+  .toolbar {
+    align-items: stretch;
+    flex-direction: column;
   }
 }
 

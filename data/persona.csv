@@ -1,0 +1,4 @@
+id,name,wfh,wfo,hybrid
+P001,Required,false,true,false
+P002,Flexible,true,true,true
+P003,Remote,true,false,false

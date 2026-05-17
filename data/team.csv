@@ -1,0 +1,37 @@
+id,name,head,cohead,department
+T001,Board Liaison,E001,E002,D001
+T002,Corporate Finance,E003,E004,D002
+T003,Accounting Operations,E037,E038,D002
+T004,Talent Acquisition,E005,E006,D003
+T005,Employee Experience,E039,E040,D003
+T006,Core Platform,E007,E008,D004
+T007,Application Engineering,E041,E042,D004
+T008,Developer Experience,E043,E044,D004
+T009,Product Strategy,E009,E010,D005
+T010,Product Operations,E045,E046,D005
+T011,Enterprise Accounts,E011,E012,D006
+T012,Channel Partnerships,E047,E048,D006
+T013,Brand and Communications,E013,E014,D007
+T014,Demand Generation,E049,E050,D007
+T015,Customer Onboarding,E015,E016,D008
+T016,Technical Account Management,E051,E052,D008
+T017,Regulatory Compliance,E017,E018,D009
+T018,Privacy Office,E053,E054,D009
+T019,Threat Detection,E019,E020,D010
+T020,Identity Governance,E055,E056,D010
+T021,Service Desk,E021,E022,D011
+T022,Endpoint Engineering,E057,E058,D011
+T023,Business Intelligence,E023,E024,D012
+T024,Machine Learning Platform,E059,E060,D012
+T025,Cloud Reliability,E025,E026,D013
+T026,Network Engineering,E061,E062,D013
+T027,Vendor Management,E027,E028,D014
+T028,Sourcing Operations,E063,E064,D014
+T029,Market Intelligence,E029,E030,D015
+T030,Mergers and Integration,E065,E066,D015
+T031,Workplace Services,E031,E032,D016
+T032,Real Estate Planning,E067,E068,D016
+T033,Applied Research,E033,E034,D017
+T034,Innovation Lab,E069,E070,D017
+T035,Regional Operations,E035,E036,D018
+T036,Process Excellence,E071,E072,D018
